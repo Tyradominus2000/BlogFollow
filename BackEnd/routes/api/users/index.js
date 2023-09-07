@@ -1,12 +1,12 @@
 const route = require("express").Router();
 
-const apiRoute = require("./api");
+const apiRegister = require("./register");
 
-route.use("/api", apiRoute);
+route.use("/register", apiRegister);
 
 route.get("/", async (req, res) => {
   try {
-    res.send(JSON.stringify("BACKEND Operational try /api"));
+    res.send(JSON.stringify("USERS WORKING"));
   } catch (error) {
     res.status(500).send(error.message);
   }

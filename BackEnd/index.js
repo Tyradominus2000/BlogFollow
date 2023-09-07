@@ -6,7 +6,7 @@ const routes = require("./routes");
 
 const port = 8000;
 
-const connection = require("./database/apiConnexion");
+const connection = require("./database");
 
 connection.connect((err) => {
   if (err) throw err;

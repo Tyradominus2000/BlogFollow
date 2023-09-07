@@ -1,12 +1,11 @@
 const route = require("express").Router();
 
-const apiRoute = require("./api");
+const apiUsers = require("./users");
 
-route.use("/api", apiRoute);
-
+route.use("/users", apiUsers);
 route.get("/", async (req, res) => {
   try {
-    res.send(JSON.stringify("BACKEND Operational try /api"));
+    res.send(JSON.stringify("API WORKING"));
   } catch (error) {
     res.status(500).send(error.message);
   }
