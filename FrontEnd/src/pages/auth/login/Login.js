@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { LoginUser } from "../../../apis/users/login";
 // import { useContext } from "react";
 
 export default function Login() {
-  //   const { handleFetch } = useContext(FetchContext);
+  const navigate = useNavigate();
 
   const yupSchema = yup.object({
     email: yup
@@ -53,7 +54,7 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    // setError,
+    setError,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -64,12 +65,18 @@ export default function Login() {
   async function submit(values) {
     console.log(values);
     clearErrors();
-    // if ((await handleFetch("Signin", values)) === false) {
-    //   setError("generic", {
-    //     type: "generic",
-    //     message: "Wrong password or email",
-    //   });
-    // }
+    const response = await LoginUser(values);
+    console.log(response);
+    console.log(response !== true);
+    if (response !== true) {
+      setError("generic", {
+        type: "generic",
+        message: response,
+      });
+    } else {
+      alert("Login in ! Redirected to Home");
+      navigate("/", { replace: true });
+    }
   }
   return (
     <>
