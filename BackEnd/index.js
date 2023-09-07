@@ -1,20 +1,12 @@
 const bodyParser = require("body-parser");
 const express = require("express");
-const mysql = require("mysql");
 
 const app = express();
-const http = require("http");
-const server = http.createServer(app);
+const routes = require("./routes");
 
-const cors = require("cors");
 const port = 8000;
 
-const connection = mysql.createConnection({
-  host: "",
-  user: "",
-  password: "",
-  database: "",
-});
+const connection = require("./database/apiConnexion");
 
 connection.connect((err) => {
   if (err) throw err;
@@ -33,8 +25,7 @@ app.use((req, res, next) => {
 });
 
 //Requetes
-
-
+app.use(routes);
 
 // Lancement du serveur Node.js
 app.listen(port, () => {
