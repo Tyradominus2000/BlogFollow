@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { RegisterUser } from "../../../apis/users/register";
 
 export default function Register() {
-  //   const { handleFetch } = useContext(FetchContext);
+  const navigate = useNavigate();
+
   const yupSchema = yup.object({
     username: yup.string().required("This field must not be empty"),
     email: yup
@@ -61,7 +63,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    // setError,
+    setError,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -72,12 +74,16 @@ export default function Register() {
   async function submit(values) {
     console.log(values);
     clearErrors();
-    // if ((await handleFetch("AddUser", values)) === false) {
-    //   setError("generic", {
-    //     type: "generic",
-    //     message: "User already in use",
-    //   });
-    // }
+    const response = await RegisterUser(values);
+    if (response !== true) {
+      setError("generic", {
+        type: "generic",
+        message: response,
+      });
+    } else {
+      alert("Register you will be redirected to login");
+      navigate("/login", { replace: true });
+    }
   }
 
   return (
