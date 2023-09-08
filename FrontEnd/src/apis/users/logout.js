@@ -7,6 +7,8 @@ export async function Logout() {
         "Content-type": "application/json",
       },
     });
+    const responseFromBackEnd = await response.json();
+    return responseFromBackEnd;
   } catch (error) {
     throw error;
   }

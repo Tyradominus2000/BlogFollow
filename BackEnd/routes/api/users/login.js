@@ -26,16 +26,16 @@ route.post("/", async (req, res) => {
             secure: true,
             httpOnly: false,
           });
-          res.json(true);
+          res.send(JSON.stringify({ message: true, user: result[0] }));
         } else {
-          res.send(JSON.stringify("Wrong password or Email"));
+          res.send(JSON.stringify({ message: "Wrong password or Email" }));
         }
       } else {
-        res.send(JSON.stringify("Wrong password or Email"));
+        res.send(JSON.stringify({ message: "Wrong password or Email" }));
       }
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send({ message: error.message });
   }
 });
 

@@ -1,13 +1,16 @@
 import styles from "./Login.module.scss";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../../apis/users/login";
+import { UserContext } from "../../../context/UserContext";
 // import { useContext } from "react";
 
 export default function Login() {
+  const { setUser } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const yupSchema = yup.object({
@@ -67,13 +70,14 @@ export default function Login() {
     clearErrors();
     const response = await LoginUser(values);
     console.log(response);
-    console.log(response !== true);
-    if (response !== true) {
+    console.log(response.message !== true);
+    if (response.message !== true) {
       setError("generic", {
         type: "generic",
-        message: response,
+        message: response.message,
       });
     } else {
+      setUser(response.user);
       alert("Login in ! Redirected to Home");
       navigate("/", { replace: true });
     }
