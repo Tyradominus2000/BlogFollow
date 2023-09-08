@@ -1,9 +1,25 @@
-.container {
+.ArticleContainer {
+  margin: 10%;
+  background-color: darkblue;
   .title {
     margin-bottom: 5%;
   }
+  .follow {
+    cursor: pointer;
+    color: white;
+    &:hover {
+      color: red;
+    }
+  }
+  .unfollow {
+    cursor: pointer;
+    color: red;
+    &:hover {
+      color: white;
+    }
+  }
   .image {
-    width: 40%;
+    width: 80%;
     margin-bottom: 5%;
   }
   .description {

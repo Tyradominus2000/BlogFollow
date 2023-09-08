@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/User.context";
 import { GetUser } from "../../apis/users/getUser";
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     async function User() {

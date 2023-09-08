@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../../apis/users/login";
-import { UserContext } from "../../../context/UserContext";
+import { UserContext } from "../../../context/User.context";
 // import { useContext } from "react";
 
 export default function Login() {

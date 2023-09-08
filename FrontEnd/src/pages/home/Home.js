@@ -1,12 +1,27 @@
-// import { NavLink } from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { ArticleContext } from "../../context/Article.context";
+import "./Home.scss";
 export default function Home() {
+  const { articles } = useContext(ArticleContext);
+  console.log(articles);
   return (
     <div>
       <p>Home</p>
-      {/* <NavLink to={`/article?id=1`}>
-        <p>Article</p>
-      </NavLink> */}
+      <ul>
+        {articles ? (
+          articles.map((article) => (
+            <NavLink key={article.id} to={`/article?id=${article.id}`}>
+              <li className="d-flex">
+                <img className="HomeImg" src={article.image} alt={article.title} />
+                <h3>{article.title}</h3>
+              </li>
+            </NavLink>
+          ))
+        ) : (
+          <></>
+        )}
+      </ul>
     </div>
   );
 }

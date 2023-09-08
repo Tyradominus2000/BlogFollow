@@ -13,7 +13,7 @@ route.get("/", async (req, res) => {
         if (err) throw err;
         if (result[0]) {
           delete result[0].password;
-          res.send({ message: true, user: JSON.stringify(result[0]) });
+          res.send({ message: true, user: result[0] });
         } else {
           res.send({ message: "No User affected to that Id or Invalid Token" });
         }

@@ -4,7 +4,7 @@ export async function ArticleLoader({ request }) {
   const queryParams = new URL(request.url).searchParams.get("id");
   console.log(queryParams);
   if (queryParams) {
-    return true;
+    return queryParams;
   } else {
     return redirect("../");
   }

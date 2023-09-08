@@ -2,14 +2,19 @@ import "./Header.scss";
 import { NavLink } from "react-router-dom";
 import { Logout } from "../../apis/users/logout";
 import { useContext } from "react";
-import { UserContext } from "../../context/UserContext";
+import { UserContext } from "../../context/User.context";
 export default function Header() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   return (
     <div className="d-flex justify-content-around container">
-      <p>MonBlog</p>
+      <NavLink to={"../"}>
+        <p>MonBlog</p>
+      </NavLink>
       {user ? (
-        <button onClick={Logout}>LOGOUT</button>
+        <>
+          <button className="btnFollow">Follow</button>
+          <button onClick={() => Logout(setUser)}>LOGOUT</button>
+        </>
       ) : (
         <NavLink to={"/login"}>
           <p>Login</p>
