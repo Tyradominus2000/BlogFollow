@@ -5,6 +5,7 @@ import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import UserProvider from "./components/userProvider/User.Provider";
 import ArticleProvider from "./components/articleProvider/Article.Provider";
+import SubscriptionProvider from "./components/subscriptionProvider/Subscription.provider";
 
 function App() {
   return (
@@ -13,13 +14,15 @@ function App() {
     >
       <UserProvider>
         <ArticleProvider>
-          <Header />
-          <div className="d-flex flex-fill">
-            <Suspense fallback={<h1>Chargement en cours...;</h1>}>
-              <Outlet />
-            </Suspense>
-          </div>
-          <Footer />
+          <SubscriptionProvider>
+            <Header />
+            <div className="d-flex flex-fill">
+              <Suspense fallback={<h1>Chargement en cours...;</h1>}>
+                <Outlet />
+              </Suspense>
+            </div>
+            <Footer />
+          </SubscriptionProvider>
         </ArticleProvider>
       </UserProvider>
     </div>

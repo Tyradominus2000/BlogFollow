@@ -3,7 +3,7 @@ import { UserContext } from "../../context/User.context";
 import { GetUser } from "../../apis/users/getUser";
 
 export default function UserProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function User() {

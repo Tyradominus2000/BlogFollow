@@ -1,24 +1,42 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import "./Article.scss";
 import { ArticleContext } from "../../context/Article.context";
 import { useLoaderData } from "react-router-dom";
 import { UserContext } from "../../context/User.context";
+import { SubscriptionContext } from "../../context/Subscription.context";
 
 export default function Article() {
   const { articles } = useContext(ArticleContext);
   const { user } = useContext(UserContext);
+  const { follow } = useContext(SubscriptionContext);
   const queryParams = useLoaderData();
   let article;
+
+  if (articles) {
+    article = getObjectById(articles, queryParams);
+  }
+
+  useEffect(() => {
+    if (article && follow) {
+      const buttonFollowElement = document.querySelector(".buttonFollow");
+      if (buttonFollowElement) {
+        if (follow.includes(article.Id_User)) {
+          buttonFollowElement.classList.add("follow");
+          console.log("follow");
+        } else {
+          console.log("unfollow");
+          buttonFollowElement.classList.add("unfollow");
+        }
+      }
+    }
+  }, [follow, article]);
   function getObjectById(array, id) {
     console.log(array, id);
     const result = array.find((obj) => obj.id === parseInt(id));
     return result ? result : false;
   }
-  if (articles) {
-    article = getObjectById(articles, queryParams);
-  }
 
-  function follow(target) {
+  function SetFollow(target) {
     if (target.className.includes("unfollow")) {
       target.className = target.className.replace("unfollow", "follow");
     } else if (target.className.includes("follow")) {
@@ -35,8 +53,9 @@ export default function Article() {
             {user ? (
               user.Id !== article.Id_User && (
                 <h4
-                  className="follow"
-                  onClick={(event) => follow(event.target)}
+                  id="follow"
+                  className="buttonFollow"
+                  onClick={(event) => SetFollow(event.target)}
                 >
                   Follow
                 </h4>

@@ -6,16 +6,16 @@
   }
   .follow {
     cursor: pointer;
-    color: white;
+    color: red;
     &:hover {
-      color: red;
+      color: white;
     }
   }
   .unfollow {
     cursor: pointer;
-    color: red;
+    color: white;
     &:hover {
-      color: white;
+      color: red;
     }
   }
   .image {
