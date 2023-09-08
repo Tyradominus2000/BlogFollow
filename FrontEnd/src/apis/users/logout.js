@@ -1,14 +1,14 @@
 const API_USERS_LOGOUT = "/api/users/logout";
-export async function Logout() {
+export async function Logout(setUser) {
   try {
-    const response = await fetch(API_USERS_LOGOUT, {
+    await fetch(API_USERS_LOGOUT, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
       },
     });
-    const responseFromBackEnd = await response.json();
-    return responseFromBackEnd;
+
+    setUser(null);
   } catch (error) {
     throw error;
   }
