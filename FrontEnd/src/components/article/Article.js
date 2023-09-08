@@ -4,6 +4,7 @@ import { ArticleContext } from "../../context/Article.context";
 import { useLoaderData } from "react-router-dom";
 import { UserContext } from "../../context/User.context";
 import { SubscriptionContext } from "../../context/Subscription.context";
+import { setUnfollow } from "../../apis/subscription/unfollow";
 
 export default function Article() {
   const { articles } = useContext(ArticleContext);
@@ -36,11 +37,14 @@ export default function Article() {
     return result ? result : false;
   }
 
-  function SetFollow(target) {
+  async function SetFollow(target) {
     if (target.className.includes("unfollow")) {
       target.className = target.className.replace("unfollow", "follow");
     } else if (target.className.includes("follow")) {
-      target.className = target.className.replace("follow", "unfollow");
+      const response = await setUnfollow(user.Id, article.Id_User);
+      if (response === true) {
+        target.className = target.className.replace("follow", "unfollow");
+      }
     }
   }
 
