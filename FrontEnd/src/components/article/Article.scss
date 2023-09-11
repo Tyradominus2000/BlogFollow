@@ -1,27 +1,29 @@
 .ArticleContainer {
   margin: 10%;
-  background-color: darkblue;
-  .title {
-    margin-bottom: 5%;
-  }
-  .follow {
-    cursor: pointer;
-    color: red;
-    &:hover {
-      color: white;
+  .Article {
+    background-color: darkblue;
+    .title {
+      margin-bottom: 5%;
     }
-  }
-  .unfollow {
-    cursor: pointer;
-    color: white;
-    &:hover {
+    .follow {
+      cursor: pointer;
       color: red;
+      &:hover {
+        color: white;
+      }
     }
-  }
-  .image {
-    width: 80%;
-    margin-bottom: 5%;
-  }
-  .description {
+    .unfollow {
+      cursor: pointer;
+      color: white;
+      &:hover {
+        color: red;
+      }
+    }
+    .image {
+      margin-bottom: 5%;
+    }
+    .description {
+      padding: 5%;
+    }
   }
 }

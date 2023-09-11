@@ -28,10 +28,10 @@ export async function getComment(idArticle) {
 
         if (responseFromBackEndReplies.message === true) {
           // Get the Author Name of the replies and store it in the property author
-          responseFromBackEndReplies.comment.map(async (com) => {
+          responseFromBackEndReplies.comment.map(async (com, i) => {
             const responseAuthorReplies = await GetUser(com.Id_User);
             if (responseAuthorReplies.message === true) {
-              responseFromBackEndReplies.comment[index].author =
+              responseFromBackEndReplies.comment[i].author =
                 responseAuthorReplies.user.name;
             }
           });

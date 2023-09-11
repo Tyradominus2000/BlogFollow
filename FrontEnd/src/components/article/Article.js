@@ -9,15 +9,31 @@ import { setFollowAPI } from "../../apis/subscription/follow";
 import { GetUser } from "../../apis/users/getUser";
 import { getFollow } from "../../apis/subscription/getFollow";
 import { CommentContext } from "../../context/Comment.context";
+import Comment from "../comment/Comment";
 
+//create your forceUpdate hook
+function useForceUpdate() {
+  const [value, setValue] = useState(0); // integer state
+  return () => setValue((value) => value + 1); // update state to force render
+  // A function that increment 👆🏻 the previous state like here
+  // is better than directly setting `setValue(value + 1)`
+}
 export default function Article() {
   const [author, setAuthor] = useState(null);
   const [article, setArticle] = useState(null);
+  const [showComment, setShowComment] = useState(false);
   const { articles } = useContext(ArticleContext);
-  const { comments, setIdArticle } = useContext(CommentContext);
+  const { comments, setIdArticle, loading } = useContext(CommentContext);
   const { follow, setFollow } = useContext(SubscriptionContext);
   const { user } = useContext(UserContext);
   const queryParams = useLoaderData();
+
+  const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    forceUpdate();
+  }, [loading, articles]);
+
   /**
    *
    * @param {Array.<Object>} array
@@ -35,22 +51,22 @@ export default function Article() {
   }, [articles, queryParams]);
 
   useEffect(() => {
-    console.log(comments);
+    console.log("comment in Article ", comments);
   }, [comments]);
 
   // Get author and comment
   useEffect(() => {
+    if (article) {
+      setAuthorFunction();
+      console.log("im changing id");
+      setIdArticle(article.id);
+    }
     async function setAuthorFunction() {
       const response = await GetUser(article.Id_User);
       if (response.message === true) {
         setAuthor(response.user);
       }
     }
-    if (article) {
-      setAuthorFunction();
-      setIdArticle(article.id);
-    }
-    // eslint-disable-next-line
   }, [article]);
 
   // Handle the follow and unfollow
@@ -90,34 +106,58 @@ export default function Article() {
   }
 
   return (
-    <div className="ArticleContainer d-flex flex-column">
+    <div className="ArticleContainer d-flex flex-fill flex-column">
       {article ? (
         <>
-          <div className="d-flex justify-content-around title">
-            <h2>{article.title}</h2>
-            {user ? (
-              user.Id !== article.Id_User && (
-                <h4
-                  id="follow"
-                  className="buttonFollow"
-                  onClick={(event) => SetFollow(event.target)}
-                >
-                  Follow
-                </h4>
-              )
-            ) : (
-              <></>
-            )}
+          <div className="Article">
+            <div className="d-flex justify-content-around title">
+              <h2>{article.title}</h2>
+              {user ? (
+                user.Id !== article.Id_User && (
+                  <h4
+                    id="follow"
+                    className="buttonFollow"
+                    onClick={(event) => SetFollow(event.target)}
+                  >
+                    Follow
+                  </h4>
+                )
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className="author">
+              <p>{author && "Auteur : " + author.name}</p>
+            </div>
+            <div className="image d-flex flex-fill justify-content-center">
+              <img src={article.image} alt={article.title} />
+            </div>
+            <div className="description">
+              <p>{article.description}</p>
+            </div>
           </div>
-          <div className="author">
-            <p>{author && "Auteur : " + author.name}</p>
-          </div>
-          <div className="image">
-            <img src={article.image} alt={article.title} />
-          </div>
-          <div className="description">
-            <p>{article.description}</p>
-          </div>
+          <button
+            onClick={() => {
+              forceUpdate();
+              setShowComment(true);
+            }}
+          >
+            Show Comment
+          </button>
+          {!loading ? (
+            showComment &&
+            comments &&
+            comments.map((com) => (
+              <Comment
+                comment={com}
+                commentReplies={com.replies}
+                loading={loading}
+                key={com.id}
+              />
+            ))
+          ) : (
+            <p>loading...</p>
+          )}
         </>
       ) : (
         <>

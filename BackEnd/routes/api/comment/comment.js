@@ -22,6 +22,7 @@ router.get("/:id", async (req, res) => {
     const sql = `SELECT * FROM comment WHERE Id_Article = "${idArticle}"`;
     connection.query(sql, (err, result) => {
       if (err) throw err;
+      console.log(result);
       if (result.length > 0) {
         res.send(JSON.stringify({ message: true, comment: result }));
       } else {

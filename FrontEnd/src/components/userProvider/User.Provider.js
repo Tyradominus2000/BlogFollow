@@ -10,7 +10,6 @@ export default function UserProvider({ children }) {
       const response = await GetUserToken();
       if (response.message !== true) {
         setUser(null);
-        console.log(response.message);
       } else {
         setUser(response.user);
       }
