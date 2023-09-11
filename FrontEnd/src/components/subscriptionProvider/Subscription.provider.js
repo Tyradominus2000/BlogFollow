@@ -17,12 +17,8 @@ export default function SubscriptionProvider({ children }) {
     }
   }, [user]);
 
-  useEffect(() => {
-    console.log(follow);
-  }, [follow]);
-
   return (
-    <SubscriptionContext.Provider value={{ follow }}>
+    <SubscriptionContext.Provider value={{ follow, setFollow }}>
       {children}
     </SubscriptionContext.Provider>
   );

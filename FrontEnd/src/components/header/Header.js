@@ -8,8 +8,6 @@ export default function Header() {
   const { user, setUser } = useContext(UserContext);
   const { follow } = useContext(SubscriptionContext);
 
-  console.log(follow);
-
   return (
     <div className="d-flex justify-content-around container">
       <NavLink to={"../"}>
@@ -18,7 +16,9 @@ export default function Header() {
       {user ? (
         <>
           {follow && follow.length > 0 ? (
-            <button className="btnFollow">Follow</button>
+            <NavLink className={`d-flex align-items-center`} to={"/follow"}>
+              <button className="btnFollow">Follow</button>
+            </NavLink>
           ) : (
             <></>
           )}

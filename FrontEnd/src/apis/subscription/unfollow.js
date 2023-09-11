@@ -1,9 +1,9 @@
-const API_SUBSCRIPTION_FOLLOW = "/api/subscription/unfollow";
+const API_SUBSCRIPTION_UNFOLLOW = "/api/subscription/unfollow";
 
 export async function setUnfollow(idFollower, idFollowed) {
   try {
     const response = await fetch(
-      API_SUBSCRIPTION_FOLLOW + "/" + idFollower + "/" + idFollowed,
+      API_SUBSCRIPTION_UNFOLLOW + "/" + idFollower + "/" + idFollowed,
       {
         method: "DELETE",
         headers: {

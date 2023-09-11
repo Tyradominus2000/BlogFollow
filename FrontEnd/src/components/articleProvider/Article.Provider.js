@@ -14,10 +14,6 @@ export default function ArticleProvider({ children }) {
     Article();
   }, []);
 
-  useEffect(() => {
-    console.log(articles);
-  }, [articles]);
-
   return (
     <ArticleContext.Provider value={{ articles }}>
       {children}

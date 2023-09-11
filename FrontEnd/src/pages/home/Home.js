@@ -6,7 +6,7 @@ export default function Home() {
   const { articles } = useContext(ArticleContext);
   return (
     <div>
-      <p>Home</p>
+      <p>Liste des Articles</p>
       <ul>
         {articles ? (
           articles.map((article) => (

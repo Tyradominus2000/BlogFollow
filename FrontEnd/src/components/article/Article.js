@@ -1,49 +1,78 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Article.scss";
 import { ArticleContext } from "../../context/Article.context";
 import { useLoaderData } from "react-router-dom";
 import { UserContext } from "../../context/User.context";
 import { SubscriptionContext } from "../../context/Subscription.context";
 import { setUnfollow } from "../../apis/subscription/unfollow";
+import { setFollowAPI } from "../../apis/subscription/follow";
+import { GetUser } from "../../apis/users/getUser";
+import { getFollow } from "../../apis/subscription/getFollow";
 
 export default function Article() {
+  const [author, setAuthor] = useState(null);
   const { articles } = useContext(ArticleContext);
   const { user } = useContext(UserContext);
-  const { follow } = useContext(SubscriptionContext);
+  const { follow, setFollow } = useContext(SubscriptionContext);
   const queryParams = useLoaderData();
   let article;
-
-  if (articles) {
-    article = getObjectById(articles, queryParams);
+  /**
+   *
+   * @param {Array.<Object>} array
+   * @param {Number} id
+   * @returns {Object} containing only the article with the selected id
+   */
+  function getObjectById(array, id) {
+    const result = array.find((obj) => obj.id === parseInt(id));
+    return result ? result : false;
   }
 
+  useEffect(() => {
+    async function setAuthorFunction() {
+      if (article) {
+        const response = await GetUser(article.Id_User);
+        if (response.message === true) {
+          setAuthor(response.user);
+        }
+      }
+    }
+    setAuthorFunction();
+  }, [article]);
   useEffect(() => {
     if (article && follow) {
       const buttonFollowElement = document.querySelector(".buttonFollow");
       if (buttonFollowElement) {
         if (follow.includes(article.Id_User)) {
           buttonFollowElement.classList.add("follow");
-          console.log("follow");
+          buttonFollowElement.classList.remove("unfollow");
         } else {
-          console.log("unfollow");
           buttonFollowElement.classList.add("unfollow");
+          buttonFollowElement.classList.remove("follow");
         }
       }
     }
   }, [follow, article]);
-  function getObjectById(array, id) {
-    console.log(array, id);
-    const result = array.find((obj) => obj.id === parseInt(id));
-    return result ? result : false;
+
+  if (articles) {
+    article = getObjectById(articles, queryParams);
   }
 
+  /**
+   *
+   * @param {HTMLElement} target
+   */
   async function SetFollow(target) {
     if (target.className.includes("unfollow")) {
-      target.className = target.className.replace("unfollow", "follow");
+      const response = await setFollowAPI(user.Id, article.Id_User);
+      if (response.message === true) {
+        setFollow(await getFollow(user.Id));
+        alert("Succesfully follow");
+      }
     } else if (target.className.includes("follow")) {
       const response = await setUnfollow(user.Id, article.Id_User);
-      if (response === true) {
-        target.className = target.className.replace("follow", "unfollow");
+      if (response.message === true) {
+        setFollow(await getFollow(user.Id));
+        alert("Succesfully unfollow");
       }
     }
   }
@@ -67,6 +96,9 @@ export default function Article() {
             ) : (
               <></>
             )}
+          </div>
+          <div className="author">
+            <p>{author && "Auteur : " + author.name}</p>
           </div>
           <div className="image">
             <img src={article.image} alt={article.title} />

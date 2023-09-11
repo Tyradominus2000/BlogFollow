@@ -2,10 +2,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/home/Home";
+import Follow from "../pages/follow/Follow";
 import Article from "../components/article/Article";
-import { ArticleLoader } from "../loaders/Article.loader";
 import Login from "../pages/auth/login/Login";
 import Register from "../pages/auth/register/Register";
+import { ArticleLoader } from "../loaders/Article.loader";
 import { AuthLoader } from "../loaders/Auth.loader";
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/follow",
+        element: <Follow />,
       },
       {
         path: "/article/*",

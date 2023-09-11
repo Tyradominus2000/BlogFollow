@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { UserContext } from "../../context/User.context";
-import { GetUser } from "../../apis/users/getUser";
+import { GetUserToken } from "../../apis/users/getUser";
 
 export default function UserProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     async function User() {
-      const response = await GetUser();
+      const response = await GetUserToken();
       if (response.message !== true) {
         setUser(null);
         console.log(response.message);
