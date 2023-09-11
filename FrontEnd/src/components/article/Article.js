@@ -8,14 +8,16 @@ import { setUnfollow } from "../../apis/subscription/unfollow";
 import { setFollowAPI } from "../../apis/subscription/follow";
 import { GetUser } from "../../apis/users/getUser";
 import { getFollow } from "../../apis/subscription/getFollow";
+import { CommentContext } from "../../context/Comment.context";
 
 export default function Article() {
   const [author, setAuthor] = useState(null);
+  const [article, setArticle] = useState(null);
   const { articles } = useContext(ArticleContext);
-  const { user } = useContext(UserContext);
+  const { comments, setIdArticle } = useContext(CommentContext);
   const { follow, setFollow } = useContext(SubscriptionContext);
+  const { user } = useContext(UserContext);
   const queryParams = useLoaderData();
-  let article;
   /**
    *
    * @param {Array.<Object>} array
@@ -26,18 +28,32 @@ export default function Article() {
     const result = array.find((obj) => obj.id === parseInt(id));
     return result ? result : false;
   }
+  useEffect(() => {
+    if (articles) {
+      setArticle(getObjectById(articles, queryParams));
+    }
+  }, [articles, queryParams]);
 
   useEffect(() => {
+    console.log(comments);
+  }, [comments]);
+
+  // Get author and comment
+  useEffect(() => {
     async function setAuthorFunction() {
-      if (article) {
-        const response = await GetUser(article.Id_User);
-        if (response.message === true) {
-          setAuthor(response.user);
-        }
+      const response = await GetUser(article.Id_User);
+      if (response.message === true) {
+        setAuthor(response.user);
       }
     }
-    setAuthorFunction();
+    if (article) {
+      setAuthorFunction();
+      setIdArticle(article.id);
+    }
+    // eslint-disable-next-line
   }, [article]);
+
+  // Handle the follow and unfollow
   useEffect(() => {
     if (article && follow) {
       const buttonFollowElement = document.querySelector(".buttonFollow");
@@ -52,10 +68,6 @@ export default function Article() {
       }
     }
   }, [follow, article]);
-
-  if (articles) {
-    article = getObjectById(articles, queryParams);
-  }
 
   /**
    *

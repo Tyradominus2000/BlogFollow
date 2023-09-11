@@ -6,6 +6,7 @@ import Header from "./components/header/Header";
 import UserProvider from "./components/userProvider/User.Provider";
 import ArticleProvider from "./components/articleProvider/Article.Provider";
 import SubscriptionProvider from "./components/subscriptionProvider/Subscription.provider";
+import CommentProvider from "./components/commentProvider/Comment.Provider";
 
 function App() {
   return (
@@ -17,9 +18,11 @@ function App() {
           <SubscriptionProvider>
             <Header />
             <div className="d-flex flex-fill">
-              <Suspense fallback={<h1>Chargement en cours...;</h1>}>
-                <Outlet />
-              </Suspense>
+              <CommentProvider>
+                <Suspense fallback={<h1>Chargement en cours...;</h1>}>
+                  <Outlet />
+                </Suspense>
+              </CommentProvider>
             </div>
             <Footer />
           </SubscriptionProvider>

@@ -12,7 +12,24 @@ router.post("/", async (req, res) => {
       res.send(JSON.stringify({ message: true }));
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(JSON.stringify({ message: error.message }));
+  }
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const idArticle = req.params.id;
+    const sql = `SELECT * FROM comment WHERE Id_Article = "${idArticle}"`;
+    connection.query(sql, (err, result) => {
+      if (err) throw err;
+      if (result.length > 0) {
+        res.send(JSON.stringify({ message: true, comment: result }));
+      } else {
+        res.send(JSON.stringify({ message: false }));
+      }
+    });
+  } catch (error) {
+    res.status(500).send(JSON.stringify({ message: error.message }));
   }
 });
 

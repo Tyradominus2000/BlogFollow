@@ -24,8 +24,12 @@ export async function GetUser(id) {
       },
       body: JSON.stringify({ id }),
     });
-    const responseFromBackEnd = await response.json();
-    return responseFromBackEnd;
+    if (response.ok) {
+      const responseFromBackEnd = await response.json();
+      return responseFromBackEnd;
+    } else {
+      return false;
+    }
   } catch (error) {
     throw error;
   }
