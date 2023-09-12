@@ -3,7 +3,10 @@
   background-color: blue;
   border: 2px solid black;
   padding: 2%;
-  .commentReplies{
+  .sendReplieComment {
+    cursor: pointer;
+  }
+  .commentReplies {
     border: 2px solid black;
     padding: 2%;
     margin-left: 10%;

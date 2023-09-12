@@ -8,22 +8,24 @@
     transition: 0.2s opacity;
     opacity: 0.8;
   }
-  &-primary{
+  &-primary {
     background-color: var(--primary);
     color: white;
     border: 2px solid var(--primary);
     border-radius: 5px;
   }
-  &-primary-reverse{
+  &-primary-reverse {
     background-color: white;
     color: var(--primary);
     border: 2px solid var(--primary);
     border-radius: 5px;
   }
 }
+.form-error-light {
+  color: var(--error);
+}
 
-
-.card{
+.card {
   border-radius: 10px;
   background-color: var(--primary);
 }

@@ -10,29 +10,19 @@ import { GetUser } from "../../apis/users/getUser";
 import { getFollow } from "../../apis/subscription/getFollow";
 import { CommentContext } from "../../context/Comment.context";
 import Comment from "../comment/Comment";
+import PopUpComment from "../popUpComment/PopUpComment";
 
-//create your forceUpdate hook
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue((value) => value + 1); // update state to force render
-  // A function that increment 👆🏻 the previous state like here
-  // is better than directly setting `setValue(value + 1)`
-}
 export default function Article() {
   const [author, setAuthor] = useState(null);
   const [article, setArticle] = useState(null);
-  const [showComment, setShowComment] = useState(false);
+  const [showComment, setShowComment] = useState(true);
+  const [showPopUpComment, setShowPopUpComment] = useState(false);
   const { articles } = useContext(ArticleContext);
-  const { comments, setIdArticle, loading } = useContext(CommentContext);
+  const { comments, setIdArticle, loading, sendComment } =
+    useContext(CommentContext);
   const { follow, setFollow } = useContext(SubscriptionContext);
   const { user } = useContext(UserContext);
   const queryParams = useLoaderData();
-
-  const forceUpdate = useForceUpdate();
-
-  useEffect(() => {
-    forceUpdate();
-  }, [loading, articles]);
 
   /**
    *
@@ -50,15 +40,10 @@ export default function Article() {
     }
   }, [articles, queryParams]);
 
-  useEffect(() => {
-    console.log("comment in Article ", comments);
-  }, [comments]);
-
   // Get author and comment
   useEffect(() => {
     if (article) {
       setAuthorFunction();
-      console.log("im changing id");
       setIdArticle(article.id);
     }
     async function setAuthorFunction() {
@@ -67,7 +52,7 @@ export default function Article() {
         setAuthor(response.user);
       }
     }
-  }, [article]);
+  }, [article, setIdArticle]);
 
   // Handle the follow and unfollow
   useEffect(() => {
@@ -126,7 +111,7 @@ export default function Article() {
                 <></>
               )}
             </div>
-            <div className="author">
+            <div className="author d-flex justify-content-center">
               <p>{author && "Auteur : " + author.name}</p>
             </div>
             <div className="image d-flex flex-fill justify-content-center">
@@ -138,23 +123,55 @@ export default function Article() {
           </div>
           <button
             onClick={() => {
-              forceUpdate();
-              setShowComment(true);
+              setShowComment(!showComment);
             }}
           >
-            Show Comment
+            {showComment ? "Hide Comment" : "Show Comment"}
           </button>
           {!loading ? (
-            showComment &&
-            comments &&
-            comments.map((com) => (
-              <Comment
-                comment={com}
-                commentReplies={com.replies}
-                loading={loading}
-                key={com.id}
-              />
-            ))
+            showComment && (
+              <div>
+                {user && (
+                  <>
+                    <button
+                      className="sendCommentArticle"
+                      style={{ marginTop: 20, width: "50%" }}
+                      onClick={() => setShowPopUpComment(true)}
+                    >
+                      Send Comment
+                    </button>
+                    <>
+                      {showPopUpComment && (
+                        <PopUpComment
+                          sendComment={sendComment}
+                          setVisible={setShowPopUpComment}
+                          IsComment={true}
+                          articleName={article.name}
+                          id={article.id}
+                          idUser={user && user.Id}
+                        />
+                      )}
+                    </>
+                  </>
+                )}
+                {comments && (
+                  <>
+                    <>
+                      {comments.map((com) => (
+                        <Comment
+                          user={user}
+                          comment={com}
+                          commentReplies={com.replies}
+                          loading={loading}
+                          sendComment={sendComment}
+                          key={com.id}
+                        />
+                      ))}
+                    </>
+                  </>
+                )}
+              </div>
+            )
           ) : (
             <p>loading...</p>
           )}

@@ -1,0 +1,36 @@
+.popUpContainer {
+  background-color: rgba(6, 40, 40, 0.75);
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  .inputTitleContainer {
+    margin-top: 2.5%;
+    .inputComment {
+      padding: 5%;
+      font-weight: 700;
+      width: 40vw;
+      height: 100%;
+    }
+  }
+  .inputDescriptionContainer {
+    margin-top: 5%;
+    .inputComment {
+      padding: 5%;
+      font-weight: 700;
+      width: 40vw;
+      height: 20vh;
+    }
+  }
+  .btnInputContainer {
+    margin-top: 5%;
+    button {
+      padding: 10%;
+      margin-left: 50%;
+      margin-right: 50%;
+    }
+  }
+}
