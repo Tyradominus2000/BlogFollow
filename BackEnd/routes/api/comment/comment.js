@@ -24,6 +24,16 @@ router.get("/:id", async (req, res) => {
       if (err) throw err;
       console.log(result);
       if (result.length > 0) {
+        result.map(
+          (res) =>
+            (res.date = new Date(res.date).toLocaleDateString("fr-FR", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            }))
+        );
         res.send(JSON.stringify({ message: true, comment: result }));
       } else {
         res.send(JSON.stringify({ message: false }));

@@ -12,12 +12,12 @@ export default function Home() {
           articles.map((article) => (
             <NavLink key={article.id} to={`/article?id=${article.id}`}>
               <li className="d-flex article_items">
-                <img
-                  className="HomeImg"
-                  src={article.image}
-                  alt={article.title}
-                />
-                <h3>{article.title}</h3>
+                <div className="HomeImg d-flex justify-content-center align-items-center">
+                  <img src={article.image} alt={article.title} />
+                </div>
+                <h3 className="d-flex align-items-center titleHome">
+                  {article.title}
+                </h3>
               </li>
             </NavLink>
           ))

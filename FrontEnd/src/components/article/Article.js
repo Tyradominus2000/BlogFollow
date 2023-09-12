@@ -15,6 +15,7 @@ import PopUpComment from "../popUpComment/PopUpComment";
 export default function Article() {
   const [author, setAuthor] = useState(null);
   const [article, setArticle] = useState(null);
+  const [following, setFollowing] = useState(null);
   const [showComment, setShowComment] = useState(true);
   const [showPopUpComment, setShowPopUpComment] = useState(false);
   const { articles } = useContext(ArticleContext);
@@ -60,9 +61,11 @@ export default function Article() {
       const buttonFollowElement = document.querySelector(".buttonFollow");
       if (buttonFollowElement) {
         if (follow.includes(article.Id_User)) {
+          setFollowing(true);
           buttonFollowElement.classList.add("follow");
           buttonFollowElement.classList.remove("unfollow");
         } else {
+          setFollowing(false);
           buttonFollowElement.classList.add("unfollow");
           buttonFollowElement.classList.remove("follow");
         }
@@ -95,8 +98,13 @@ export default function Article() {
       {article ? (
         <>
           <div className="Article">
-            <div className="d-flex justify-content-around title">
-              <h2>{article.title}</h2>
+            <div className="d-flex justify-content-around align-items-center title">
+              <h1>{article.title}</h1>
+            </div>
+            <div
+              className="d-flex justify-content-end"
+              style={{ marginRight: "5%" }}
+            >
               {user ? (
                 user.Id !== article.Id_User && (
                   <h4
@@ -104,7 +112,7 @@ export default function Article() {
                     className="buttonFollow"
                     onClick={(event) => SetFollow(event.target)}
                   >
-                    Follow
+                    {following ? "Following" : "Follow"}
                   </h4>
                 )
               ) : (

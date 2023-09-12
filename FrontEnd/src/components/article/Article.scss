@@ -1,9 +1,11 @@
 .ArticleContainer {
   margin: 10%;
   .Article {
-    background-color: darkblue;
+    background-color: var(--blue-2);
+    border: 2px solid var(--divider);
     .title {
-      margin-bottom: 5%;
+      margin-top: 2.5%;
+      margin-bottom: 2.5%;
     }
     .follow {
       cursor: pointer;

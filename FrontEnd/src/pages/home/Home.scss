@@ -1,8 +1,16 @@
 .article_items {
+  border: 3px solid var(--hard-blue);
+  background-color: var(--blue-1);
   margin-top: 5%;
   margin-bottom: 5%;
+  .titleHome {
+    margin-left: 10%;
+  }
   .HomeImg {
-    max-width: 20%;
-    max-height: 20%;
+    width: 20%;
+    height: auto;
+    img {
+      object-fit: contain;
+    }
   }
 }
