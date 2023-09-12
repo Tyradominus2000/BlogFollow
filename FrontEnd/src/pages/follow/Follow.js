@@ -21,7 +21,9 @@ export default function Follow() {
                       src={article.image}
                       alt={article.title}
                     />
-                    <h3>{article.title}</h3>
+                    <h3 className="d-flex align-items-center titleHome">
+                      {article.title}
+                    </h3>
                   </li>
                 </NavLink>
               ) : (

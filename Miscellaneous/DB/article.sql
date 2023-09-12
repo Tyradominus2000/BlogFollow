@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 11 sep. 2023 à 15:01
+-- Généré le : mar. 12 sep. 2023 à 15:22
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -53,8 +53,8 @@ INSERT INTO `article` (`id`, `title`, `description`, `image`, `Id_User`) VALUES
 
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL,
-  `date` date NOT NULL,
-  `title` varchar(150) NOT NULL,
+  `date` datetime NOT NULL,
+  `title` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `Id_User` int(11) NOT NULL,
   `Id_Article` int(11) NOT NULL
@@ -65,8 +65,8 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`id`, `date`, `title`, `description`, `Id_User`, `Id_Article`) VALUES
-(1, '2023-09-11', 'Missile', 'I will find you F35', 10, 1),
-(2, '2023-09-10', 'AIM-9', 'AIM-9 for the win', 9, 1);
+(12, '2023-09-12 14:37:15', 'AMERICA', 'AIM-9 FOR THE WIN BABY', 9, 1),
+(13, '2023-09-12 14:39:25', 'WHAT', 'People in this Blog seem crazy', 7, 1);
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,7 @@ INSERT INTO `comment` (`id`, `date`, `title`, `description`, `Id_User`, `Id_Arti
 
 CREATE TABLE `commentreplies` (
   `id` int(11) NOT NULL,
-  `date` date NOT NULL,
+  `date` datetime NOT NULL,
   `description` text NOT NULL,
   `Id_Comment` int(11) NOT NULL,
   `Id_User` int(11) NOT NULL
@@ -87,7 +87,9 @@ CREATE TABLE `commentreplies` (
 --
 
 INSERT INTO `commentreplies` (`id`, `date`, `description`, `Id_Comment`, `Id_User`) VALUES
-(1, '2023-09-11', 'GET AWAY FROM ME YOU DEMON', 1, 9);
+(6, '2023-09-12 14:37:44', 'Hello', 12, 10),
+(7, '2023-09-12 14:38:07', 'GET AWAY FROM ME YOU DEMON', 12, 9),
+(8, '2023-09-12 14:38:57', 'Prepare for trouble and make it double', 12, 11);
 
 -- --------------------------------------------------------
 
@@ -107,7 +109,8 @@ CREATE TABLE `follow` (
 
 INSERT INTO `follow` (`Id`, `Id_UserFollowed`, `Id_UserFollower`) VALUES
 (15, 7, 6),
-(10, 6, 7),
+(17, 6, 7),
+(18, 8, 7),
 (12, 6, 8);
 
 -- --------------------------------------------------------
@@ -132,7 +135,8 @@ INSERT INTO `user` (`Id`, `name`, `email`, `password`) VALUES
 (7, 'Nicolas', 'Nicolas@gmail.com', '$2b$10$SxipVKHbajugEzNaaehIAuqDMzd5q7ho5BwTCT1TrGN2AGQiioWKC'),
 (8, 'LeBlogueur', 'blog@blog.com', '$2b$10$nOeppog2Bc25YJ/2Gk6diuwT8Sx2cb/gHP5D2vk5Wg9yEKyBEVVtO'),
 (9, 'F35', 'F35@america.us', '$2b$10$ctGu3lygVvhm2ECFNhmiue.4yj13/O94GMmLFfVmebf3SHkOiHcLy'),
-(10, 'Raffale', 'Raffale@france.fr', '$2b$10$4Ed7VwlpIxCK2MVwfhILiO1wOEIjRqZge82WuMH8VYao0zYWKUyja');
+(10, 'Raffale', 'Raffale@france.fr', '$2b$10$4Ed7VwlpIxCK2MVwfhILiO1wOEIjRqZge82WuMH8VYao0zYWKUyja'),
+(11, 'Mirage 2000', 'Mirage@france.fr', '$2b$10$cJlVgFe5ZOg7745stsCjyuBEERurneZEXKKuwr7T.CF5UOpA8GG/G');
 
 --
 -- Index pour les tables déchargées
@@ -189,25 +193,25 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT pour la table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `commentreplies`
 --
 ALTER TABLE `commentreplies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `follow`
 --
 ALTER TABLE `follow`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Contraintes pour les tables déchargées
