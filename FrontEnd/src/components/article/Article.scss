@@ -9,7 +9,7 @@
     }
     .follow {
       cursor: pointer;
-      color: red;
+      color: var(--error-light);
       &:hover {
         color: white;
       }
