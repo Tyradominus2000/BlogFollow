@@ -50,9 +50,7 @@ export default function Comment({
                 ))}
               </div>
             ) : (
-              <div className="commentReplies">
-                <p>No replies</p>
-              </div>
+              <></>
             )}
           </div>
         </div>
